@@ -1,53 +1,40 @@
-// @ts-check
-const { test, expect } = require('@playwright/test');
+// test-suite-for-affiliate-cpa-report-page.spec.ts
+import { test, expect } from '@playwright/test';
 
-test.describe('AffiliateCPAReportTest', () => {
-  test('test', async ({ page }) => {
-
-    // Navigate to https://aff-12bet.nexdev.net/12BetAdmin1/Portal/Login
-    await page.goto('https://aff-12bet.nexdev.net/12BetAdmin1/Portal/Login');
-
-    // Type 'aaWalter' into the username field
-    await page.locator('input[name="userName"]').fill('aaWalter');
-
-    // Type '1234aa' into the password field
-    await page.locator('input[name="password"]').fill('1234aa');
-
-    // Click the login button
-    await page.locator('button:has-text("Login")').click();
-
-    // Wait for navigation and then navigate to the Affiliate CPA Report page
-    await page.waitForURL('**/Portal/Home'); // Wait for successful login
-    await page.goto('https://aff-12bet.nexdev.net/12BetAdmin1/Portal/Affiliate/AffiliateCpaReport'); // Replace with the actual URL of the Affiliate CPA Report page
-
-    // Observe the loading time
-    const startTime = Date.now();
-    await page.waitForLoadState('networkidle');
-    const endTime = Date.now();
-    const loadingTime = endTime - startTime;
-    console.log(`Loading time: ${loadingTime}ms`);
-
-    // Verify that all columns are present and populated with data for the default date range
-    const columnHeaders = await page.$$eval('th', headers => headers.map(header => header.textContent));
-    console.log('Column Headers:', columnHeaders);
-    expect(columnHeaders.length).toBeGreaterThan(0); // Check if there are any columns
-
-    //Verify that at least one row of data is present
-    const rowCount = await page.$$eval('tbody tr', rows => rows.length);
-    console.log('Number of rows:', rowCount);
-    expect(rowCount).toBeGreaterThan(0);
-
-    // Check if there are any error messages or broken elements on the page
-    // Check for specific error message elements or console errors
-    page.on('console', msg => {
-      if (msg.type() === 'error') {
-        console.error(`Console error: ${msg.text()}`);
-        expect(true).toBe(false); // Fail the test if there's a console error
-      }
-    });
-
-    // Optionally, check for specific error message elements on the page
-    const errorMessage = await page.locator('.error-message').textContent(); // Replace '.error-message' with the actual selector
-    expect(errorMessage).toBeNull(); // Or expect(errorMessage).toBe(''); if the element is present but empty when no error
+test('AffiliateCPAReportTest', async ({ page }) => {
+  // Navigate to https://aff-12bet.nexdev.net/12BetAdmin1/Portal/Login
+  await page.goto('https://aff-12bet.nexdev.net/12BetAdmin1/Portal/Login');
+  // Type 'aaWalter' into the username field
+  await page.locator('input[name="UserName"]').type('aaWalter');
+  // Type '1234aa' into the password field
+  await page.locator('input[name="Password"]').type('1234aa');
+  // Click the login button
+  await page.locator('button[type="submit"]').click();
+  // Navigate to the Affiliate CPA Report page
+  // Assuming there is a link or button to navigate to the Affiliate CPA Report page, replace 'Affiliate CPA Report' with the actual locator
+  await page.goto('https://aff-12bet.nexdev.net/YOUR_AFFILIATE_CPA_REPORT_PAGE_URL'); // Replace with the actual URL
+  // Observe the loading time
+  const startTime = Date.now();
+  await page.waitForLoadState('networkidle');
+  const endTime = Date.now();
+  const loadingTime = endTime - startTime;
+  console.log(`Loading time: ${loadingTime}ms`);
+  // Verify that all columns are present and populated with data for the default date range
+  // Replace with the actual column locators
+  const columns = ['Column 1', 'Column 2', 'Column 3']; // Replace with the actual column names
+  for (const column of columns) {
+    await expect(page.locator(`th:has-text("${column}")`)).toBeVisible();
+    // Verify that the column has data
+    const firstDataCell = page.locator(`td:nth-child(${columns.indexOf(column) + 1})`);
+    await expect(firstDataCell).not.toBeEmpty();
+  }
+  // Check if there are any error messages or broken elements on the page
+  // Check for error messages
+  const errorMessages = await page.locator('.error, .alert, .danger').allTextContents();
+  expect(errorMessages.length).toBe(0);
+  // Check for broken images
+  const brokenImages = await page.locator('img[src]').evaluateAll(imgs => {
+    return imgs.filter(img => !img.complete || (typeof img.naturalWidth !== "undefined" && img.naturalWidth === 0)).length;
   });
+  expect(brokenImages).toBe(0);
 });
