@@ -7,7 +7,8 @@
     "start": "node dist/server.js",
     "dev": "NODE_OPTIONS=\"--loader ts-node/esm\" nodemon src/test.ts",
     "test": "NODE_OPTIONS=\"--loader ts-node/esm\" nodemon src/test.ts",
-    "watch": "tsc -w & node --watch dist/server.js"
+    "watch": "tsc -w & node --watch dist/server.js",
+    "run": "npx ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -29,7 +30,7 @@
     "@types/node": "^22.13.4",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.8.3"
   },
   "description": ""
 }

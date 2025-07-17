@@ -7,7 +7,7 @@ import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { z } from "zod";
 import cors from "cors";
 import { writeFileSync } from "fs";
-import { agent } from "./agent/agent";
+import { agent } from "./config/agent.js";
 
 // Load environment variables
 config();
@@ -31,8 +31,7 @@ server.tool("generate-test-suite", {
     const writeToFile = () => {
         const codeMatch = result.match(/```typescript\s+([\s\S]*?)```/);
         const tsCode = codeMatch ? codeMatch[1].trim() : '';
-            
-        writeFileSync('test-suite.ts', tsCode);
+        writeFileSync(`test-suite.ts`, tsCode);
     }
     
     writeToFile();
