@@ -1,0 +1,35 @@
+{
+  "name": "mcp-webai-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "NODE_OPTIONS=\"--loader ts-node/esm\" nodemon src/test.ts",
+    "test": "NODE_OPTIONS=\"--loader ts-node/esm\" nodemon src/test.ts",
+    "watch": "tsc -w & node --watch dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@langchain/google-genai": "^0.2.15",
+    "@langchain/openai": "^0.6.1",
+    "@modelcontextprotocol/sdk": "^1.5.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mcp-use": "^0.1.8",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
+  },
+  "description": ""
+}
