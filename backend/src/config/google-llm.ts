@@ -7,4 +7,4 @@ export const llm = new ChatGoogleGenerativeAI({
     model: model,
     temperature: 0,
     apiKey: apiKey
-  });
+});

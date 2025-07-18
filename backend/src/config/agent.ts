@@ -1,9 +1,15 @@
 import { MCPAgent } from "mcp-use";
 import { llm } from "./google-llm.js";
-import { client } from "./mcp-client.js";
+import { googleSheetsClient, playWrightClient } from "./mcp-client.js";
 
-export const agent = new MCPAgent({
+export const playWrightAgent = new MCPAgent({
     llm,
-    client,
+    client: playWrightClient,
+    maxSteps: 50
+});
+
+export const googleSheetsAgent = new MCPAgent({
+    llm,
+    client: googleSheetsClient,
     maxSteps: 50
 });

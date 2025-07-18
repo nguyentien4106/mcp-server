@@ -1,12 +1,19 @@
 import { MCPClient } from "mcp-use";
 
-const config = {
+export const playWrightClient = MCPClient.fromDict({
     mcpServers: {
         playwright: {
             command: 'npx',
             args: ['@playwright/mcp@latest']
         }
     }
-}
+});
 
-export const client = MCPClient.fromDict(config);
+export const googleSheetsClient = MCPClient.fromDict({
+    mcpServers: {
+        googleSheets: {
+            command: 'npx',
+            args: ['@google/sheets-mcp@latest']
+        }
+    }
+})
