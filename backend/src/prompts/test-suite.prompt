@@ -1,3 +1,2 @@
-Generate a playwright typescript test suite for the scenario below. The action in test-suite file should depend on text only.
-1. Navigate to url : <<url>>, input username and password with data "<<userName>>, <<password>>. using playwright-mcp
+0. I want to you navigate to <<url>>.  
 <<scenario>>

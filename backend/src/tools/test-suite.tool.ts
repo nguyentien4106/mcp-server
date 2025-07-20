@@ -19,18 +19,22 @@ export const testSuiteToolHandler = async (args: {
     const { name, description, scenarios, url } = args;
     const userName = process.env.USER_NAME || '';
     const password = process.env.PASSWORD || '';
-
-    const result = await playWrightAgent.run(getPrompt("test-suite.prompt", {
+    const prompt = getPrompt("test-suite.prompt", {
         scenario: scenarios[0] || '',
         url,
         userName,
         password,
-    }));
+    });
+    console.log('prompt: ',prompt);
+    const result = await playWrightAgent.run(prompt);
     
     const writeToFile = () => {
         const codeMatch = result.match(/```typescript\s+([\s\S]*?)```/);
         const tsCode = codeMatch ? codeMatch[1].trim() : '';
-        writeFileSync(`${name}.ts`, tsCode);
+        writeFileSync(`${name}.ts`, tsCode, {
+            encoding: 'utf-8',
+            
+        });
     }
     
     writeToFile();
